@@ -1,0 +1,44 @@
+#A Pythagorean triplet is a set of three natural numbers, a < b < c, for which a**2 + b**2 = c**2
+
+#For example, 32 + 42 = 9 + 16 = 25 = 52.
+
+#There exists exactly one Pythagorean triplet for which a + b + c = 1000.
+#Find the product abc.
+
+#for pythagorean triplets;
+#c will be minimized when a = b, so c = 1000-2a; 2a**2 = (1000-2a)**2; 2a**2 -4000a + 1000000 = 0; a = 292.8932; c = 414.2
+#c will be maximized when a = 0, so b = c = 500
+
+$solution = false
+$c = 415
+$a = 292
+$b = 293#we know that this is close to a solution of the problem, so we start here
+
+while $c < 500 && $solution == false#decrease $c until solution is found
+  
+  if $a**2 + $b**2 > $c**2
+    while $a**2 + $b**2 > $c**2
+      $a += 1
+      $b -= 1
+    end
+    if $a**2 + $b**2 == $c**2
+      $solution = true
+    end
+  elsif $a**2 + $b**2 < $c**2
+    while $a**2 + $b**2 < $c**2
+      $a -= 1
+      $b += 1
+    end
+    if $a**2 + $b**2 == $c**2
+      $solution = true
+    end
+  else
+    $solution = true
+  end
+  if $solution == false
+    $c += 1
+    $a -= 1
+  end
+end
+
+puts("The product a*b*c = #{$a*$b*$c}")
