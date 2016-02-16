@@ -1,0 +1,47 @@
+
+#10001st prime
+#Problem 7
+#By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
+
+#What is the 10 001st prime number?
+
+$n = 10001
+$nthprime = 3
+$i = 1 # the second prime is 3 (Primes will be searched by 6*i +/- 1), 5 is the 3rd prime
+$plusmin = 1
+
+while $nthprime <= $n do
+  $prime = true
+  $j = 3 # Because we start at 3 and increment by 2, no number should ever be divisible by 2, hence j starts at 3
+ 
+
+  if $plusmin == 1
+  	$plusmin = -1
+    $x = 6*$i + $plusmin
+    while $j*$j <= $x && $prime == true do
+      if $x % $j == 0
+        $prime = false
+      end
+      $j += 2
+    end
+  else
+    $plusmin = 1
+    $x = 6*$i + $plusmin
+    while $j*$j <= $x && $prime == true do
+      if $x % $j == 0
+        $prime = false
+      end
+      $j += 2
+    end
+  end
+
+  if $plusmin == 1# && $n != $nthprime #plusmin = 1 means we've checked both 6x+1 and 6x-1
+    $i += 1
+  end
+  
+  if $prime == true
+    $nthprime += 1
+  end
+end
+puts("#{$i}")
+puts("The #{$n}th prime is #{$x}.")
