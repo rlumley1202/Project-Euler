@@ -1,0 +1,74 @@
+#The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+
+#Find the sum of all the primes below two million.
+
+$x = 1 #we will find primes using the form 6*$x +/- 1
+$sum = 5 # we start at x = 1, but still need to count 2 and 3 as prime
+$max = 2000000
+while 6*$x < $max - 6 #the last iteration of x will be evaluated separately
+  $prime = true
+  $j = 3 # Because we start at 3 and increment by 2, no number should ever be divisible by 2, hence j starts at 3
+  
+  $n = 6*$x - 1
+  
+  while $prime == true && $j*$j <= $n
+    
+    if $n % $j == 0
+      $prime = false
+    end
+    $j +=2
+  end
+  
+  if $prime == true
+    $sum += $n
+  end
+  
+  $n = 6*$x + 1
+  $prime = true
+  $j = 3
+  
+  while $prime == true && $j*$j <= $n
+    if $n % $j == 0
+      $prime = false
+    end
+    $j +=2
+  end
+  
+  if $prime == true
+    $sum += $n
+  end
+  $x += 1
+end
+
+$n = 6*$x - 1
+$prime = true
+$j = 3
+while $prime == true && $j*$j <= $n
+  if $n % $j == 0
+    $prime = false
+  end
+  $j +=2
+end
+
+if $prime == true
+  $sum += $n
+end
+
+$n = 6*$x + 1
+$prime = true
+$j = 3
+if $n < $max
+  while $prime == true && $j*$j <= $n
+    if $n % $j == 0
+      $prime = false
+    end
+    $j +=2
+  end
+
+  if $prime == true
+    $sum += $n
+  end
+  $x += 1
+end
+
+puts("The sum of all primes below #$max is #$sum")
