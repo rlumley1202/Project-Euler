@@ -1,0 +1,12 @@
+$number = 600851475143
+$factor = 2
+$divnumber = $number
+
+while $factor < $divnumber do
+  if $divnumber % $factor == 0
+    $divnumber = $divnumber / $factor;
+  end  
+  $factor += 1
+end
+
+puts("The largest prime factor of #$number is #$factor.")
