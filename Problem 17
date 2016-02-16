@@ -1,0 +1,142 @@
+=begin
+
+If the numbers 1 to 5 are written out in words: one, two, three, four, five, then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in total.
+
+If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used?
+
+
+NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-two) contains 23 letters and 115 (one hundred and fifteen) contains 20 letters. The use of "and" when num == writing out numbers is in compliance with British usage.
+
+=end
+
+
+sum = 0
+min = 1
+max = 1000
+for num in min..max
+	case (num % 100)/ 10
+
+	when 1#teens
+		case num % 10
+			when 0
+			sum += 3#ten
+			when 1
+			sum += 6#eleven
+			when 2
+			sum += 6#twelve
+			when 3
+			sum += 8#thirteen
+			when 4
+			sum += 8#fourteen
+			when 5
+			sum += 7#fifteen
+			when 6
+			sum += 7#sixteen
+			when 7
+			sum += 9#seventeen
+			when 8
+			sum += 8#eighteen
+			when 9 
+			sum += 8#nineteen
+		end
+	else#0-9 or >20
+		case num % 10
+			when 0
+			sum += 0#twenty/thirty/forty/etc.
+			when 1
+			sum += 3#one
+			when 2
+			sum += 3#two
+			when 3
+			sum += 5#three
+			when 4
+			sum += 4#four
+			when 5
+			sum += 4#five
+			when 6
+			sum += 3#six
+			when 7
+			sum += 5#seven
+			when 8
+			sum += 5#eight
+			when 9
+			sum += 4#nine
+		end
+		
+		case (num % 100) / 10
+			when 0
+			sum += 0#one through nine + n-hundred
+			when 2#num/10 should never equal one here because we are in the else statement of case num/10 = 1
+			sum += 6#twenty
+			when 3
+			sum += 6#thirty
+			when 4
+			sum += 5#forty
+			when 5
+			sum += 5#fifty
+			when 6
+			sum += 5#sixty
+			when 7
+			sum += 7#seventy
+			when 8
+			sum += 6#eighty
+			when 9
+			sum += 6#ninety
+		end
+	end
+
+	if num / 100 != 0 && num % 100 != 0
+		sum += 3#and
+	end
+
+
+	case (num % 1000) / 100
+		when 0
+		sum += 0#num < 100
+		when 1
+		sum += 10#one hundred
+		when 2
+		sum += 10#two hundred
+		when 3
+		sum += 12#three hundred
+		when 4
+		sum += 11#four hundred
+		when 5
+		sum += 11#five hundred
+		when 6
+		sum += 10#six hundred
+		when 7
+		sum += 12#seven hundred
+		when 8
+		sum += 12#eight hundred
+		when 9
+		sum += 11#nine hundred
+	end
+
+	case num / 1000
+		when 0
+		sum += 0#num < 1000
+		when 1
+		sum += 11#one thousand
+		when 2
+		sum += 11#two thousand
+		when 3
+		sum += 13#three thousand
+		when 4
+		sum += 12#four thousand
+		when 5
+		sum += 12#five thousand
+		when 6
+		sum += 11#six thousand
+		when 7
+		sum += 13#seven thousand
+		when 8
+		sum += 13#eight thousand
+		when 9
+		sum += 12#nine thousand
+	end
+	
+end
+
+
+	puts("The number of letters in all numbers from #{min} to #{max} is #{sum}")
