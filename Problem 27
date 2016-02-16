@@ -1,0 +1,101 @@
+=begin
+Euler discovered the remarkable quadratic formula:
+
+n² + n + 41
+
+It turns out that the formula will produce 40 primes for the consecutive values n = 0 to 39. However, when n = 40, 402 + 40 + 41 = 40(40 + 1) + 41 is divisible by 41, and certainly when n = 41, 41² + 41 + 41 is clearly divisible by 41.
+
+The incredible formula  n² − 79n + 1601 was discovered, which produces 80 primes for the consecutive values n = 0 to 79. The product of the coefficients, −79 and 1601, is −126479.
+
+Considering quadratics of the form:
+
+n² + an + b, where |a| < 1000 and |b| < 1000
+
+where |n| is the modulus/absolute value of n
+e.g. |11| = 11 and |−4| = 4
+Find the product of the coefficients, a and b, for the quadratic expression that produces the maximum number of primes for consecutive values of n, starting with n = 0
+=end
+
+
+#since b must be prime for n = 0 to be a prime, we will search for primes assuming b is prime
+i = 0
+plusmin = -1
+b = 2
+maxprimecount = 0
+maxa = 0
+maxb = 0
+bbound = 1000
+abound = 1000
+
+while b < bbound
+	if i == 0 and plusmin == -1#these if statments allow us to include b = 2, 3 but search for the remainder of primes using 6i +/- 1
+		b = 2
+		plusmin = 1
+	elsif i == 0 and plusmin == 1
+		b = 3
+		plusmin = -1
+	else
+		b = 6*i + plusmin
+	end
+	bprime = true
+	j = 3
+	while j**2 <= b
+		if b % j == 0
+			bprime == false
+		end
+		j += 2
+	end
+		
+	if bprime == true#b is prime (so n = 0 is prime) and we want to see what values of a will generate long series of primes for n
+		a = abound *-1 + 1
+		while a < abound
+			primecount = 1#we have already tested n = 0 and found it to be prime by virtue of the fact that b is prime
+			n = 1
+			primerun = true
+			while primerun == true
+				k = 1
+				num = n**2 + a*n + b
+				if num < 2
+					primerun = false
+				end
+				
+				
+				while k**2 <= num && primerun == true
+					k += 1
+					if num % k == 0
+						primerun = false
+					end
+				end
+
+#				puts("#{b} #{a} #{n} #{num} #{primecount}")
+				
+				if primerun == true
+					primecount += 1
+					n += 1
+					if primecount > maxprimecount
+						maxprimecount = primecount
+						maxa = a
+						maxb = b
+					end
+				end
+				
+
+			end
+			a += 1
+		end
+	end
+	
+	if plusmin == 1 and i >= 1#these if statments allow us to include b = 2, 3 but search for the remainder of primes using 6i +/- 1
+		i += 1
+		plusmin = -1
+	elsif plusmin == -1 and i == 0
+		plusmin = -1
+		i = 1
+	elsif plusmin == -1
+		plusmin = 1
+	end
+	
+end
+
+puts("The quadratic equation that produces the maximum number of primes for successive values of n starting with n=0 is given by a=#{maxa} b=#{maxb}. The chain is #{maxprimecount} primes long and a*b is #{maxa*maxb}.")
+	
