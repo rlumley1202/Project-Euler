@@ -1,0 +1,56 @@
+=begin
+  The following iterative sequence is defined for the set of positive integers:
+
+  n = n/2 (n is even)
+  n = 3n + 1 (n is odd)
+
+  Using the rule above and starting with 13, we generate the following sequence:
+
+  13 ? 40 ? 20 ? 10 ? 5 ? 16 ? 8 ? 4 ? 2 ? 1
+  It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms. Although it has not been proved yet (Collatz Problem), it is thought that all starting numbers finish at 1.
+
+  Which starting number, under one million, produces the longest chain?
+
+  NOTE: Once the chain starts the terms are allowed to go above one million
+=end
+n = 1000000
+
+hash = Hash.new(0)
+#hash[x] will store the number of steps to get to one if a solution has been found and 0 otherwise. x will equal the starting number. hash[0] will be nonsensical for these purposes
+
+i = n-1#We will start at hash[n-1] and work down to 1
+while i > 1
+	if hash[i].zero?
+		numstep = 0 #numstep will hold the number of loops that j makes until it gets to 1 or a number that has already been solved
+		j = i
+		while j > 1 && hash[j].zero?
+			case j%2
+			when 1 # j is odd
+				j = 3*j + 1
+			when 0 # j is even
+				j = j/2
+			end
+			numstep += 1
+			
+		end
+		stop = hash[j] #if j has been solved, hash[j] is the number of steps to j = 1. If j = 1, hash[j] = 0
+		j = i
+		counter = 0
+		while j > 1 && hash[j].zero?#loop back through what we just did now that we know what values to assign and actually assign values to hash[j]
+			if j < n
+				hash[j] = numstep + stop - counter #numstep + stop should equal the solution to the ith number, to get the jth number we subtract counter
+			end
+			
+			case j%2
+			when 1 #j is odd
+				j = 3*j+1
+			when 0 #j is even
+				j = j/2
+			end
+			counter += 1
+		end
+		
+	end
+	i = i-1
+end
+puts("The longest Collatz sequence below #{n} is #{hash.max_by{|k,v| v}[1]} numbers long and starts at #{hash.max_by{|k,v| v}[0]}.")
