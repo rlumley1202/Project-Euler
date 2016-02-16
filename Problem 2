@@ -1,0 +1,16 @@
+$prevterm = 1
+$currterm = 2
+$holder = 0
+$sum = 0
+$max = 4000000
+
+while $currterm <= $max
+  if $currterm % 2 == 0
+    $sum += $currterm
+  end
+  $holder = $prevterm
+  $prevterm =$currterm
+  $currterm = $holder + $prevterm
+end
+
+puts("The sum of even valued Fibonacci terms less than four million is #$sum")
