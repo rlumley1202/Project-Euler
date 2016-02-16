@@ -1,0 +1,16 @@
+$max = 20
+$i = $max
+divisible = false
+while divisible == false
+  $i += $max
+  divisible = true
+  $j = $max-1
+  while divisible == true && $j > $max/2
+    if $i % $j != 0
+      divisible = false
+    end
+  $j -= 1
+  end
+end
+
+puts("The smallest positive number evenly divisible by all numbers from 1 to #$max is #$i")
