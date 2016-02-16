@@ -1,0 +1,37 @@
+=begin
+A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
+
+Find the largest palindrome made from the product of two 3-digit numbers.
+=end
+
+
+def IsPalindrome(number)
+	x = number
+	y = 0
+	while x > 0 do
+		y = y*10 + x%10
+		x = x/10
+	end
+	  
+	if y == number
+		return true
+	else
+		return false
+	end
+end
+  
+  
+
+maxpal = 0
+for x in 100..999
+	for y in 100..999
+		if IsPalindrome(x*y) == true
+			if maxpal < x*y
+				maxpal = x*y
+			end
+		end
+	end
+end
+	
+
+puts("The largest palnidrome of two three digit numbers is #{maxpal}")
